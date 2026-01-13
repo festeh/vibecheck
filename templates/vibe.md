@@ -1,5 +1,5 @@
 ---
-description: Analyze user query and codebase to determine the best approach strategy.
+description: Analyze user query and codebase to pick the best approach.
 ---
 
 ## User Input
@@ -10,67 +10,63 @@ $ARGUMENTS
 
 ## Purpose
 
-You are a strategic advisor that helps determine the best approach for tackling a user's problem. Analyze the query and codebase context to recommend one of three strategies.
+Help the user pick the right approach: write a spec, create a plan, or start coding.
 
-## Execution Flow
+## Steps
 
-1. **Parse the user's query** from the input above.
-   - If empty: Ask the user what they want to accomplish.
+1. **Read the user's query** above.
+   - If empty: Ask what they want to build.
 
-2. **Analyze the query characteristics**:
-   - Is it a new feature request or enhancement?
-   - Is it a bug fix or small change?
-   - Is it a refactoring or architectural change?
-   - How complex is the request?
-   - How well-defined are the requirements?
+2. **Classify the request**:
+   - New feature or enhancement?
+   - Bug fix or small change?
+   - Refactor or architecture change?
 
-3. **Explore the codebase** to understand:
-   - Relevant existing code and patterns
-   - Dependencies and integrations involved
-   - Potential impact scope (how many files/modules affected)
-   - Existing tests and documentation
+3. **Explore the codebase**:
+   - Find related code and patterns
+   - Check dependencies
+   - Count affected files
+   - Look for tests
 
-4. **Determine the recommended strategy**:
+4. **Pick a strategy**:
 
-   ### Strategy A: Spec First
-   **When:** Requirements are unclear or vague.
-   Define WHAT the system should do.
+   ### Spec First
+   **When:** Requirements are unclear.
+   Define WHAT to build.
 
-   ### Strategy B: Plan First
-   **When:** Requirements are clear but implementation is non-trivial.
-   Define HOW to implement it.
+   ### Plan First
+   **When:** Requirements are clear but the work is complex.
+   Define HOW to build it.
 
-   ### Strategy C: Implementation
-   **When:** Everything else - clear and trivial.
-   Use `/ultrathink` to implement directly.
+   ### Implementation
+   **When:** Clear and simple.
+   Use `/ultrathink` and start coding.
 
-5. **Present your recommendation**:
-
-   Format your response as:
+5. **Share your recommendation**:
 
    ```
    ## Analysis
 
-   [Brief summary of the query and what you found in the codebase]
+   [What the user wants + what you found in the code]
 
    ## Assessment
 
    - Clarity: [Clear / Unclear]
-   - Trivial: [Yes / No]
+   - Simple: [Yes / No]
 
    ## Recommendation: [Spec / Plan / Implementation]
 
-   [Explanation of why this strategy is best]
+   [Why this approach fits best]
 
    ## Next Steps
 
-   [Specific guidance on what to do next]
+   [What to do now]
    ```
 
 ## Decision Matrix
 
-| Clarity | Trivial? | Recommendation |
-|---------|----------|----------------|
-| Unclear | - | Spec First |
-| Clear | No | Plan First |
-| Clear | Yes | Implementation |
+| Clarity | Simple? | Recommendation |
+|---------|---------|----------------|
+| Unclear | -       | Spec First     |
+| Clear   | No      | Plan First     |
+| Clear   | Yes     | Implementation |

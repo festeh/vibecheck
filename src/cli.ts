@@ -1,8 +1,11 @@
 #!/usr/bin/env bun
 
-import { resolve, dirname } from "path";
+import { resolve, dirname, join } from "path";
+import { homedir } from "os";
 
 const VERSION = "0.0.1";
+const GLOBAL_CONFIG_DIR = join(homedir(), ".config", "vibecheck");
+const GLOBAL_RULES_PATH = join(GLOBAL_CONFIG_DIR, "rules.md");
 
 function printVersion() {
   console.log(`vibecheck v${VERSION}`);
@@ -41,8 +44,17 @@ async function init() {
   await Bun.write(resolve(commandsDir, ".gitkeep"), "");
 
   // Copy template
-  const templateContent = await templateFile.text();
-  await Bun.write(targetPath, templateContent);
+  let content = await templateFile.text();
+
+  // Append global rules if they exist
+  const globalRulesFile = Bun.file(GLOBAL_RULES_PATH);
+  if (await globalRulesFile.exists()) {
+    const globalRules = await globalRulesFile.text();
+    content += "\n" + globalRules;
+    console.log(`Found global rules: ${GLOBAL_RULES_PATH}`);
+  }
+
+  await Bun.write(targetPath, content);
 
   console.log(`Initialized vibecheck in ${cwd}`);
   console.log(`Created: .claude/commands/vibe.md`);
@@ -53,6 +65,10 @@ async function status() {
   const cwd = process.cwd();
   const vibePath = resolve(cwd, ".claude", "commands", "vibe.md");
   const vibeFile = Bun.file(vibePath);
+  const globalRulesFile = Bun.file(GLOBAL_RULES_PATH);
+
+  const hasGlobalRules = await globalRulesFile.exists();
+  console.log(`Global rules: ${hasGlobalRules ? GLOBAL_RULES_PATH : "not configured"}`);
 
   if (await vibeFile.exists()) {
     console.log(`vibecheck is enabled in ${cwd}`);
