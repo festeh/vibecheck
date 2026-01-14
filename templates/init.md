@@ -21,8 +21,7 @@ Set up project-level rules by selecting from global config.
    - Show each rule with a number
    - Ask: "Which rules do you want for this project? (e.g., 1,3,5 or all)"
 
-3. **For rules that need project-specific details**, ask follow-up:
-   - Rule 1 (local source): "Which directories contain source code? (e.g., node_modules, site-packages)"
+3. **For rules that say "If included:"**, ask follow-up questions to fill in project-specific details.
 
 4. **Scan the repo**:
    - Check if `specs/` directory exists
@@ -43,7 +42,7 @@ Set up project-level rules by selecting from global config.
 
 ## Example
 
-If user selects rules 1 and 4, and specifies "node_modules" for sources:
+User selects rules 1 and 4. Rule 1 has "If included: specify source directories", so ask and fill in:
 
 ```markdown
 # Project Rules
