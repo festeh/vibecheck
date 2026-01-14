@@ -28,11 +28,13 @@ Write a clear spec that defines WHAT to build. No technical details. Anyone can 
 
 List each user story as a simple action:
 
-1. **[Action]** - [One sentence describing what the user does and why]
+1. **[Action]**
+   [What the user does and why]
    - Works when: [success scenario]
    - Fails when: [edge case]
 
-2. **[Action]** - [Description]
+2. **[Action]**
+   [Description]
    - Works when: [success scenario]
    - Fails when: [edge case]
 
@@ -75,11 +77,13 @@ Output:
 
 ## What Users Can Do
 
-1. **Request password reset** - User enters email to get a reset link
+1. **Request password reset**
+   User enters email to get a reset link.
    - Works when: Email exists, link sent within 1 minute
    - Fails when: Email not found, show helpful message
 
-2. **Set new password** - User clicks link and creates new password
+2. **Set new password**
+   User clicks link and creates new password.
    - Works when: Link valid, password meets rules, user logged in
    - Fails when: Link expired (after 24h), show "request new link"
 
