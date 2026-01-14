@@ -10,11 +10,10 @@ const GLOBAL_RULES_PATH = join(GLOBAL_CONFIG_DIR, "rules.md");
 interface Command {
   name: string;
   template: string;
-  appendGlobalRules?: boolean;
 }
 
 const COMMANDS: Command[] = [
-  { name: "vibe", template: "vibe.md", appendGlobalRules: true },
+  { name: "vibe", template: "vibe.md" },
   { name: "plain-language", template: "plain-language.md" },
   { name: "vibe-init", template: "vibe-init.md" },
 ];
@@ -44,18 +43,10 @@ async function init() {
 
   await Bun.write(resolve(commandsDir, ".gitkeep"), "");
 
-  const globalRulesFile = Bun.file(GLOBAL_RULES_PATH);
-  const globalRules = await globalRulesFile.exists() ? await globalRulesFile.text() : null;
-  if (globalRules) console.log(`Found global rules: ${GLOBAL_RULES_PATH}`);
-
   for (const cmd of COMMANDS) {
     const template = Bun.file(resolve(templatesDir, cmd.template));
     if (!(await template.exists())) continue;
-
-    let content = await template.text();
-    if (cmd.appendGlobalRules && globalRules) content += "\n" + globalRules;
-
-    await Bun.write(resolve(commandsDir, cmd.template), content);
+    await Bun.write(resolve(commandsDir, cmd.template), await template.text());
   }
 
   console.log(`Initialized vibecheck in ${cwd}`);
