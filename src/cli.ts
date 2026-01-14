@@ -14,6 +14,7 @@ const COMMANDS: Command[] = [
   { name: "plain-language", template: "plain-language.md" },
   { name: "vibe-init", template: "vibe-init.md" },
   { name: "vibe-what", template: "vibe-what.md" },
+  { name: "vibe-how", template: "vibe-how.md" },
 ];
 
 function printVersion() {
