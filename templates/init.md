@@ -10,47 +10,52 @@ $ARGUMENTS
 
 ## Purpose
 
-Set up project-level rules by copying global config to `specs/RULES.md`.
+Set up project-level rules by selecting from global config.
 
 ## Steps
 
-1. **Check global rules** at `~/.config/vibecheck/rules.md`.
+1. **Read global rules** from `~/.config/vibecheck/rules.md`.
    - If missing: Tell the user to create it first.
 
-2. **Scan the repo**:
+2. **List each rule** and ask the user which to include:
+   - Show each rule with a number
+   - Ask: "Which rules do you want for this project? (e.g., 1,3,5 or all)"
+
+3. **For rules that need project-specific details**, ask follow-up:
+   - Rule 1 (local source): "Which directories contain source code? (e.g., node_modules, site-packages)"
+
+4. **Scan the repo**:
    - Check if `specs/` directory exists
    - Check if `specs/RULES.md` already exists
 
-3. **Create specs/RULES.md**:
+5. **Create specs/RULES.md**:
    - Create `specs/` directory if needed
-   - Copy global rules content
-   - Add project-specific header
-
-4. **Report what was done**:
-   ```
-   Created: specs/RULES.md
-
-   Rules copied from: ~/.config/vibecheck/rules.md
-
-   You can edit specs/RULES.md to add project-specific rules.
-   ```
+   - Write only selected rules
+   - Include project-specific details where needed
 
 ## Output Format
-
-The `specs/RULES.md` file should look like:
 
 ```markdown
 # Project Rules
 
-> Copied from ~/.config/vibecheck/rules.md
-> Edit this file to add project-specific rules.
+[selected rules with project-specific details filled in]
+```
 
-[content from global rules.md]
+## Example
+
+If user selects rules 1 and 4, and specifies "node_modules" for sources:
+
+```markdown
+# Project Rules
+
+1. **Use local source code.** Never fetch source from the web. Read from: `node_modules/`.
+
+4. **Write DRY code.** Extract shared logic. Avoid copy-paste.
 ```
 
 ## If RULES.md Already Exists
 
 Ask the user:
-- Overwrite with global rules?
+- Overwrite?
 - Merge (append new rules)?
 - Cancel?
