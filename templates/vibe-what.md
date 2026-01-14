@@ -26,36 +26,20 @@ Write a clear spec that defines WHAT to build. No technical details. Anyone can 
 
 ## What Users Can Do
 
-List each user story as a simple action:
-
 1. **[Action]**
    [What the user does and why]
    - Works when: [success scenario]
    - Fails when: [edge case]
 
-2. **[Action]**
-   [Description]
-   - Works when: [success scenario]
-   - Fails when: [edge case]
-
 ## Requirements
 
-What the system must do:
-
-- [ ] [Requirement in plain language]
-- [ ] [Requirement in plain language]
 - [ ] [Requirement in plain language]
 
 ## Success Looks Like
 
-How we know it works:
-
-- [Measurable outcome from user perspective]
 - [Measurable outcome from user perspective]
 
-## Open Questions
-
-Things we need to clarify (max 3):
+## Open Questions (max 3)
 
 - [Question]
 ```
