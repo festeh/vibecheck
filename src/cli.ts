@@ -27,38 +27,38 @@ Commands:
 async function init() {
   const cwd = process.cwd();
   const commandsDir = resolve(cwd, ".claude", "commands");
-  const targetPath = resolve(commandsDir, "vibe.md");
-
-  // Find template relative to this script
   const scriptDir = dirname(Bun.main);
-  const templatePath = resolve(scriptDir, "..", "templates", "vibe.md");
-
-  // Check if template exists
-  const templateFile = Bun.file(templatePath);
-  if (!(await templateFile.exists())) {
-    console.error(`Template not found: ${templatePath}`);
-    process.exit(1);
-  }
+  const templatesDir = resolve(scriptDir, "..", "templates");
 
   // Create .claude/commands directory
   await Bun.write(resolve(commandsDir, ".gitkeep"), "");
 
-  // Copy template
-  let content = await templateFile.text();
+  // Copy vibe template with global rules
+  const vibeTemplate = Bun.file(resolve(templatesDir, "vibe.md"));
+  if (!(await vibeTemplate.exists())) {
+    console.error(`Template not found: vibe.md`);
+    process.exit(1);
+  }
+  let vibeContent = await vibeTemplate.text();
 
-  // Append global rules if they exist
   const globalRulesFile = Bun.file(GLOBAL_RULES_PATH);
   if (await globalRulesFile.exists()) {
-    const globalRules = await globalRulesFile.text();
-    content += "\n" + globalRules;
+    vibeContent += "\n" + await globalRulesFile.text();
     console.log(`Found global rules: ${GLOBAL_RULES_PATH}`);
   }
+  await Bun.write(resolve(commandsDir, "vibe.md"), vibeContent);
 
-  await Bun.write(targetPath, content);
+  // Copy plain-language template
+  const plainTemplate = Bun.file(resolve(templatesDir, "plain-language.md"));
+  if (await plainTemplate.exists()) {
+    await Bun.write(resolve(commandsDir, "plain-language.md"), await plainTemplate.text());
+  }
 
   console.log(`Initialized vibecheck in ${cwd}`);
-  console.log(`Created: .claude/commands/vibe.md`);
-  console.log(`\nYou can now use /vibe in Claude Code to analyze your tasks.`);
+  console.log(`Created:`);
+  console.log(`  .claude/commands/vibe.md`);
+  console.log(`  .claude/commands/plain-language.md`);
+  console.log(`\nYou can now use /vibe and /plain-language in Claude Code.`);
 }
 
 async function status() {
