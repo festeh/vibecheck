@@ -54,11 +54,18 @@ async function init() {
     await Bun.write(resolve(commandsDir, "plain-language.md"), await plainTemplate.text());
   }
 
+  // Copy init template
+  const initTemplate = Bun.file(resolve(templatesDir, "init.md"));
+  if (await initTemplate.exists()) {
+    await Bun.write(resolve(commandsDir, "init.md"), await initTemplate.text());
+  }
+
   console.log(`Initialized vibecheck in ${cwd}`);
   console.log(`Created:`);
   console.log(`  .claude/commands/vibe.md`);
   console.log(`  .claude/commands/plain-language.md`);
-  console.log(`\nYou can now use /vibe and /plain-language in Claude Code.`);
+  console.log(`  .claude/commands/init.md`);
+  console.log(`\nCommands: /vibe, /plain-language, /init`);
 }
 
 async function status() {
