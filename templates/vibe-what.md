@@ -35,10 +35,6 @@ Write a clear spec that defines WHAT to build. No technical details. Anyone can 
 
 - [ ] [Requirement in plain language]
 
-## Success Looks Like
-
-- [Measurable outcome from user perspective]
-
 ## Open Questions (max 3)
 
 - [Question]
@@ -77,11 +73,6 @@ Output:
 - [ ] Password must be at least 8 characters
 - [ ] User gets confirmation email after reset
 - [ ] Old sessions log out after password change
-
-## Success Looks Like
-
-- 90% of users complete reset in under 3 minutes
-- Support tickets for "can't login" drop by 50%
 
 ## Open Questions
 
