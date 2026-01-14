@@ -30,17 +30,17 @@ Help the user pick the right approach: write a spec, create a plan, or start cod
 
 4. **Pick a strategy**:
 
-   ### Spec First
+   ### `/vibe-what` (Spec First)
    **When:** Requirements are unclear.
    Define WHAT to build.
 
-   ### Plan First
+   ### `/vibe-how` (Plan First)
    **When:** Requirements are clear but the work is complex.
    Define HOW to build it.
 
    ### Implementation
    **When:** Clear and simple.
-   Use `/ultrathink` and start coding.
+   Start coding.
 
 5. **Share your recommendation**:
 
@@ -54,7 +54,7 @@ Help the user pick the right approach: write a spec, create a plan, or start cod
    - Clarity: [Clear / Unclear]
    - Simple: [Yes / No]
 
-   ## Recommendation: [Spec / Plan / Implementation]
+   ## Recommendation: [/vibe-what / /vibe-how / Implementation]
 
    [Why this approach fits best]
 
@@ -65,20 +65,8 @@ Help the user pick the right approach: write a spec, create a plan, or start cod
 
 ## Decision Matrix
 
-| Clarity | Simple? | Recommendation |
-|---------|---------|----------------|
-| Unclear | -       | Spec First     |
-| Clear   | No      | Plan First     |
-| Clear   | Yes     | Implementation |
-
-## Global Rules
-
-1. **Use local source code.** Never fetch source from the web. Read from local directories. *If included: specify source directories in project RULES.md (e.g., site-packages, node_modules, vendor).*
-
-2. **Debug with logs, not guesses.** Set up logging. Demand access to logs. Find the root cause before fixing.
-
-3. **Prefer smaller code over backwards compatibility.** Delete deprecated code. Don't add shims or fallbacks.
-
-4. **Write DRY code.** Extract shared logic. Avoid copy-paste.
-
-5. **Build deep modules.** Simple interface, complex implementation. Hide details that might change. Avoid shallow wrappers that just pass data through.
+| Clarity | Simple? | Recommendation   |
+|---------|---------|------------------|
+| Unclear | -       | `/vibe-what`     |
+| Clear   | No      | `/vibe-how`      |
+| Clear   | Yes     | Implementation   |

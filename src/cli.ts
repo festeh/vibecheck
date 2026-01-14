@@ -27,11 +27,40 @@ function printHelp() {
 Usage: vc <command>
 
 Commands:
-  init       Initialize vibecheck in current directory (adds /vibe command)
-  status     Check if vibecheck is enabled in current directory
-  version    Show version information
-  help       Show this help message
+  init              Initialize vibecheck in current directory
+  branch <desc>     Create numbered feature branch (e.g., 001-add-auth)
+  status            Check if vibecheck is enabled
+  version           Show version information
+  help              Show this help message
 `);
+}
+
+async function getNextBranchNumber(): Promise<number> {
+  const result = await Bun.$`git branch -a`.text().catch(() => "");
+  const matches = result.match(/(\d{3})-/g) || [];
+  const numbers = matches.map(m => parseInt(m.replace("-", "")));
+  return numbers.length > 0 ? Math.max(...numbers) + 1 : 1;
+}
+
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 50);
+}
+
+async function branch(description: string) {
+  if (!description) {
+    console.error("Usage: vc branch <feature description>");
+    process.exit(1);
+  }
+  const num = await getNextBranchNumber();
+  const slug = slugify(description);
+  const branchName = `${String(num).padStart(3, "0")}-${slug}`;
+
+  await Bun.$`git checkout -b ${branchName}`;
+  console.log(`Created branch: ${branchName}`);
 }
 
 async function init() {
@@ -71,6 +100,9 @@ const command = process.argv[2];
 switch (command) {
   case "init":
     await init();
+    break;
+  case "branch":
+    await branch(process.argv.slice(3).join(" "));
     break;
   case "status":
     await status();
