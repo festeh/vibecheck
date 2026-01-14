@@ -1,11 +1,8 @@
 #!/usr/bin/env bun
 
-import { resolve, dirname, join } from "path";
-import { homedir } from "os";
+import { resolve, dirname } from "path";
 
 const VERSION = "0.0.1";
-const GLOBAL_CONFIG_DIR = join(homedir(), ".config", "vibecheck");
-const GLOBAL_IMPL_PATH = join(GLOBAL_CONFIG_DIR, "implementation.md");
 
 interface Command {
   name: string;
@@ -57,14 +54,9 @@ async function status() {
   const cwd = process.cwd();
   const vibePath = resolve(cwd, ".claude", "commands", "vibe.md");
   const vibeFile = Bun.file(vibePath);
-  const globalImplFile = Bun.file(GLOBAL_IMPL_PATH);
-
-  const hasGlobalImpl = await globalImplFile.exists();
-  console.log(`Implementation rules: ${hasGlobalImpl ? GLOBAL_IMPL_PATH : "not configured"}`);
 
   if (await vibeFile.exists()) {
     console.log(`vibecheck is enabled in ${cwd}`);
-    console.log(`  /vibe command: .claude/commands/vibe.md`);
   } else {
     console.log(`vibecheck is not enabled in ${cwd}`);
     console.log(`Run 'vc init' to enable it.`);
