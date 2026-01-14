@@ -7,6 +7,18 @@ const VERSION = "0.0.1";
 const GLOBAL_CONFIG_DIR = join(homedir(), ".config", "vibecheck");
 const GLOBAL_RULES_PATH = join(GLOBAL_CONFIG_DIR, "rules.md");
 
+interface Command {
+  name: string;
+  template: string;
+  appendGlobalRules?: boolean;
+}
+
+const COMMANDS: Command[] = [
+  { name: "vibe", template: "vibe.md", appendGlobalRules: true },
+  { name: "plain-language", template: "plain-language.md" },
+  { name: "vibe-init", template: "vibe-init.md" },
+];
+
 function printVersion() {
   console.log(`vibecheck v${VERSION}`);
 }
@@ -30,42 +42,24 @@ async function init() {
   const scriptDir = dirname(Bun.main);
   const templatesDir = resolve(scriptDir, "..", "templates");
 
-  // Create .claude/commands directory
   await Bun.write(resolve(commandsDir, ".gitkeep"), "");
 
-  // Copy vibe template with global rules
-  const vibeTemplate = Bun.file(resolve(templatesDir, "vibe.md"));
-  if (!(await vibeTemplate.exists())) {
-    console.error(`Template not found: vibe.md`);
-    process.exit(1);
-  }
-  let vibeContent = await vibeTemplate.text();
-
   const globalRulesFile = Bun.file(GLOBAL_RULES_PATH);
-  if (await globalRulesFile.exists()) {
-    vibeContent += "\n" + await globalRulesFile.text();
-    console.log(`Found global rules: ${GLOBAL_RULES_PATH}`);
-  }
-  await Bun.write(resolve(commandsDir, "vibe.md"), vibeContent);
+  const globalRules = await globalRulesFile.exists() ? await globalRulesFile.text() : null;
+  if (globalRules) console.log(`Found global rules: ${GLOBAL_RULES_PATH}`);
 
-  // Copy plain-language template
-  const plainTemplate = Bun.file(resolve(templatesDir, "plain-language.md"));
-  if (await plainTemplate.exists()) {
-    await Bun.write(resolve(commandsDir, "plain-language.md"), await plainTemplate.text());
-  }
+  for (const cmd of COMMANDS) {
+    const template = Bun.file(resolve(templatesDir, cmd.template));
+    if (!(await template.exists())) continue;
 
-  // Copy init template
-  const initTemplate = Bun.file(resolve(templatesDir, "vibe-init.md"));
-  if (await initTemplate.exists()) {
-    await Bun.write(resolve(commandsDir, "vibe-init.md"), await initTemplate.text());
+    let content = await template.text();
+    if (cmd.appendGlobalRules && globalRules) content += "\n" + globalRules;
+
+    await Bun.write(resolve(commandsDir, cmd.template), content);
   }
 
   console.log(`Initialized vibecheck in ${cwd}`);
-  console.log(`Created:`);
-  console.log(`  .claude/commands/vibe.md`);
-  console.log(`  .claude/commands/plain-language.md`);
-  console.log(`  .claude/commands/vibe-init.md`);
-  console.log(`\nCommands: /vibe, /plain-language, /init`);
+  console.log(`Created: ${COMMANDS.map(c => `/${c.name}`).join(", ")}`);
 }
 
 async function status() {
