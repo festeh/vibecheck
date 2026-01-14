@@ -14,7 +14,7 @@ Clarify what we're building before writing code. Catches misunderstandings early
 
 ## Purpose
 
-Write a clear spec that defines WHAT to build. No technical details. Anyone can read it.
+Define WHAT to build. Skip implementation details (no specific frameworks, databases, APIs), but don't oversimplify.
 
 **Use `/plain-language` skill while writing.**
 
@@ -39,15 +39,14 @@ Write a clear spec that defines WHAT to build. No technical details. Anyone can 
 
 - [ ] [Requirement in plain language]
 
-## Open Questions (max 3)
+## Open Questions
 
 - [Question]
 ```
 
 3. **Validate the spec**:
-   - Can a non-technical person understand it?
    - Is every requirement testable?
-   - No implementation details (no "API", "database", "React")?
+   - No implementation details (no specific frameworks, databases, libraries)?
 
 4. **Report**: Show the file path and summary.
 
