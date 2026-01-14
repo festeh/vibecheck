@@ -55,16 +55,16 @@ async function init() {
   }
 
   // Copy init template
-  const initTemplate = Bun.file(resolve(templatesDir, "init.md"));
+  const initTemplate = Bun.file(resolve(templatesDir, "vibe-init.md"));
   if (await initTemplate.exists()) {
-    await Bun.write(resolve(commandsDir, "init.md"), await initTemplate.text());
+    await Bun.write(resolve(commandsDir, "vibe-init.md"), await initTemplate.text());
   }
 
   console.log(`Initialized vibecheck in ${cwd}`);
   console.log(`Created:`);
   console.log(`  .claude/commands/vibe.md`);
   console.log(`  .claude/commands/plain-language.md`);
-  console.log(`  .claude/commands/init.md`);
+  console.log(`  .claude/commands/vibe-init.md`);
   console.log(`\nCommands: /vibe, /plain-language, /init`);
 }
 

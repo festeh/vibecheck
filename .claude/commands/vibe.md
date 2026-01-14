@@ -73,7 +73,7 @@ Help the user pick the right approach: write a spec, create a plan, or start cod
 
 ## Global Rules
 
-1. **Use local source code.** Never fetch source from the web. Read from site-packages, node_modules, or vendor directories.
+1. **Use local source code.** Never fetch source from the web. Read from local directories. *If included: specify source directories in project RULES.md (e.g., site-packages, node_modules, vendor).*
 
 2. **Debug with logs, not guesses.** Set up logging. Demand access to logs. Find the root cause before fixing.
 
