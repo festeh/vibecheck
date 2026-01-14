@@ -12,13 +12,7 @@ $ARGUMENTS
 
 Write a clear spec that defines WHAT to build. No technical details. Anyone can read it.
 
-## Plain Language Rules
-
-Apply these while writing:
-- Active voice: "Users create accounts" not "Accounts are created by users"
-- Short sentences: <25 words average
-- No jargon: Explain or avoid technical terms
-- Direct verbs: "show" not "facilitate the display of"
+**Use `/plain-language` skill while writing.**
 
 ## Steps
 
