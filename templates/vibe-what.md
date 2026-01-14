@@ -8,6 +8,10 @@ description: Create a feature specification - define WHAT to build in plain lang
 $ARGUMENTS
 ```
 
+## Why
+
+Clarify what we're building before writing code. Catches misunderstandings early. Saves time.
+
 ## Purpose
 
 Write a clear spec that defines WHAT to build. No technical details. Anyone can read it.
