@@ -5,7 +5,7 @@ import { homedir } from "os";
 
 const VERSION = "0.0.1";
 const GLOBAL_CONFIG_DIR = join(homedir(), ".config", "vibecheck");
-const GLOBAL_RULES_PATH = join(GLOBAL_CONFIG_DIR, "rules.md");
+const GLOBAL_IMPL_PATH = join(GLOBAL_CONFIG_DIR, "implementation.md");
 
 interface Command {
   name: string;
@@ -57,10 +57,10 @@ async function status() {
   const cwd = process.cwd();
   const vibePath = resolve(cwd, ".claude", "commands", "vibe.md");
   const vibeFile = Bun.file(vibePath);
-  const globalRulesFile = Bun.file(GLOBAL_RULES_PATH);
+  const globalImplFile = Bun.file(GLOBAL_IMPL_PATH);
 
-  const hasGlobalRules = await globalRulesFile.exists();
-  console.log(`Global rules: ${hasGlobalRules ? GLOBAL_RULES_PATH : "not configured"}`);
+  const hasGlobalImpl = await globalImplFile.exists();
+  console.log(`Implementation rules: ${hasGlobalImpl ? GLOBAL_IMPL_PATH : "not configured"}`);
 
   if (await vibeFile.exists()) {
     console.log(`vibecheck is enabled in ${cwd}`);
