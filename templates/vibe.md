@@ -30,17 +30,17 @@ Help the user pick the right approach: write a spec, create a plan, or start cod
 
 4. **Pick a strategy**:
 
-   ### Spec First
+   ### `/vibe-what` (Spec First)
    **When:** Requirements are unclear.
    Define WHAT to build.
 
-   ### Plan First
+   ### `/vibe-how` (Plan First)
    **When:** Requirements are clear but the work is complex.
    Define HOW to build it.
 
    ### Implementation
    **When:** Clear and simple.
-   Use `/ultrathink` and start coding.
+   Start coding.
 
 5. **Share your recommendation**:
 
@@ -54,7 +54,7 @@ Help the user pick the right approach: write a spec, create a plan, or start cod
    - Clarity: [Clear / Unclear]
    - Simple: [Yes / No]
 
-   ## Recommendation: [Spec / Plan / Implementation]
+   ## Recommendation: [/vibe-what / /vibe-how / Implementation]
 
    [Why this approach fits best]
 
@@ -65,8 +65,8 @@ Help the user pick the right approach: write a spec, create a plan, or start cod
 
 ## Decision Matrix
 
-| Clarity | Simple? | Recommendation |
-|---------|---------|----------------|
-| Unclear | -       | Spec First     |
-| Clear   | No      | Plan First     |
-| Clear   | Yes     | Implementation |
+| Clarity | Simple? | Recommendation   |
+|---------|---------|------------------|
+| Unclear | -       | `/vibe-what`     |
+| Clear   | No      | `/vibe-how`      |
+| Clear   | Yes     | Implementation   |
