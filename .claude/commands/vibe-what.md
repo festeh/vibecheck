@@ -23,7 +23,10 @@ Define WHAT to build. Skip implementation details (no specific frameworks, datab
 1. **Read the feature description** above.
    - If empty: Ask what they want to build.
 
-2. **Create spec file** at `specs/[feature-name].md`:
+2. **Get current branch** using `git branch --show-current`.
+   - If on `main` or `master`: Ask user to create a feature branch first (suggest `vc branch <description>`).
+
+3. **Create spec file** at `specs/<branch>/spec.md`:
 
 ```markdown
 # [Feature Name]
@@ -44,17 +47,18 @@ Define WHAT to build. Skip implementation details (no specific frameworks, datab
 - [Question]
 ```
 
-3. **Validate the spec**:
+4. **Validate the spec**:
    - Is every requirement testable?
    - No implementation details (no specific frameworks, databases, libraries)?
 
-4. **Report**: Show the file path and summary.
+5. **Report**: Show the file path and summary.
 
 ## Example
 
+Branch: `003-password-reset`
 Input: "Users should be able to reset their password"
 
-Output:
+Output (`specs/003-password-reset/spec.md`):
 ```markdown
 # Password Reset
 

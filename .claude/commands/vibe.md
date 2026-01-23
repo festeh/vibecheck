@@ -17,7 +17,11 @@ Help the user pick the right approach: write a spec, create a plan, or start cod
 1. **Read the user's query** above.
    - If empty: Ask what they want to build.
 
-2. **Classify the request**:
+2. **Create a feature branch**:
+   Run: `vc branch "<feature description>"`
+   Creates a numbered branch like `001-add-user-auth`.
+
+3. **Classify the request**:
    - New feature or enhancement?
    - Bug fix or small change?
    - Refactor or architecture change?

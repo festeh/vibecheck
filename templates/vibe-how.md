@@ -22,15 +22,18 @@ Define HOW to build what's in the spec. Create a concrete implementation plan.
 
 ## Steps
 
-1. **Read the spec** from `specs/[feature-name].md`.
+1. **Get current branch** using `git branch --show-current`.
+   - If on `main` or `master`: Ask user to create a feature branch first (suggest `vc branch <description>`).
+
+2. **Read the spec** from `specs/<branch>/spec.md`.
    - If no spec: Run `/vibe-what` first.
 
-2. **Create plan file** at `specs/[feature-name]-plan.md`:
+3. **Create plan file** at `specs/<branch>/plan.md`:
 
 ```markdown
 # Plan: [Feature Name]
 
-**Spec**: [link to spec file]
+**Spec**: specs/<branch>/spec.md
 
 ## Tech Stack
 
@@ -70,22 +73,23 @@ What could go wrong:
 - [Technical decision that needs input]
 ```
 
-3. **Validate the plan**:
+4. **Validate the plan**:
    - Does it cover all spec requirements?
    - Is the structure clear?
    - Are risks identified?
 
-4. **Report**: Show the file path and summary.
+5. **Report**: Show the file path and summary.
 
 ## Example
 
-Spec: Password Reset
+Branch: `003-password-reset`
+Spec: `specs/003-password-reset/spec.md`
 
-Plan:
+Output (`specs/003-password-reset/plan.md`):
 ```markdown
 # Plan: Password Reset
 
-**Spec**: specs/password-reset.md
+**Spec**: specs/003-password-reset/spec.md
 
 ## Tech Stack
 
