@@ -35,11 +35,24 @@ Commands:
 `);
 }
 
+// Check if any branch (local or remote) starts with the given prefix.
+// Strips the "* " marker from current branch before comparing.
+async function branchExists(prefix: string): Promise<boolean> {
+  const result = await Bun.$`git branch -a`.text().catch(() => "");
+  return result.split("\n").some(b => b.trim().replace(/^\*\s*/, "").startsWith(prefix));
+}
+
 async function getNextBranchNumber(): Promise<number> {
   const result = await Bun.$`git branch -a`.text().catch(() => "");
   const matches = result.match(/(\d{3})-/g) || [];
   const numbers = matches.map(m => parseInt(m.replace("-", "")));
-  return numbers.length > 0 ? Math.max(...numbers) + 1 : 1;
+  let next = numbers.length > 0 ? Math.max(...numbers) + 1 : 1;
+
+  // Sanity check: increment until we find an unused number
+  while (await branchExists(String(next).padStart(3, "0") + "-")) {
+    next++;
+  }
+  return next;
 }
 
 function slugify(text: string): string {
