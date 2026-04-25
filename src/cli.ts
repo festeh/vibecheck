@@ -1,6 +1,7 @@
 #!/usr/bin/env bun
 
 import { resolve, dirname } from "path";
+import { readdir } from "node:fs/promises";
 
 const VERSION = "0.0.1";
 
@@ -43,14 +44,38 @@ async function branchExists(prefix: string): Promise<boolean> {
   return result.split("\n").some(b => b.trim().replace(/^\*\s*/, "").startsWith(prefix));
 }
 
+// Spec directories under arch/specs/ also reserve numbers — even after their
+// branches are merged and deleted, the dir remains. Without this, recycled
+// branch numbers collide with prior plan/spec dirs.
+async function specDirExists(prefix: string): Promise<boolean> {
+  const root = (await Bun.$`git rev-parse --show-toplevel`.text().catch(() => "")).trim();
+  if (!root) return false;
+  const entries = await readdir(resolve(root, "arch", "specs")).catch(() => [] as string[]);
+  return entries.some(name => name.startsWith(prefix));
+}
+
+async function listSpecNumbers(): Promise<number[]> {
+  const root = (await Bun.$`git rev-parse --show-toplevel`.text().catch(() => "")).trim();
+  if (!root) return [];
+  const entries = await readdir(resolve(root, "arch", "specs")).catch(() => [] as string[]);
+  return entries
+    .map(name => /^(\d{3})-/.exec(name)?.[1])
+    .filter((n): n is string => n !== undefined)
+    .map(n => parseInt(n));
+}
+
 async function getNextBranchNumber(): Promise<number> {
   const result = await Bun.$`git branch -a`.text().catch(() => "");
   const matches = result.match(/(\d{3})-/g) || [];
-  const numbers = matches.map(m => parseInt(m.replace("-", "")));
+  const branchNumbers = matches.map(m => parseInt(m.replace("-", "")));
+  const specNumbers = await listSpecNumbers();
+  const numbers = [...branchNumbers, ...specNumbers];
   let next = numbers.length > 0 ? Math.max(...numbers) + 1 : 1;
 
-  // Sanity check: increment until we find an unused number
-  while (await branchExists(String(next).padStart(3, "0") + "-")) {
+  // Sanity check: increment past any number reserved by a branch or spec dir.
+  while (true) {
+    const prefix = String(next).padStart(3, "0") + "-";
+    if (!(await branchExists(prefix)) && !(await specDirExists(prefix))) break;
     next++;
   }
   return next;
