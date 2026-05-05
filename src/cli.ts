@@ -2,6 +2,7 @@
 
 import { resolve, dirname } from "path";
 import { readdir } from "node:fs/promises";
+import { homedir } from "node:os";
 
 const VERSION = "0.0.1";
 
@@ -104,6 +105,11 @@ async function branch(description: string) {
 
 async function init() {
   const cwd = process.cwd();
+  if (resolve(cwd) === resolve(homedir())) {
+    console.error("Refusing to init in $HOME — that would install commands globally into ~/.claude/commands.");
+    console.error("Run 'vc init' from inside a project directory.");
+    process.exit(1);
+  }
   const commandsDir = resolve(cwd, ".claude", "commands");
   const scriptDir = dirname(Bun.main);
   const templatesDir = resolve(scriptDir, "..", "templates");
